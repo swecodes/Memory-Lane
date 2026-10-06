@@ -43,3 +43,6 @@ next-env.d.ts
 
 # photo-memory: local library (database, compressed images, thumbnails)
 /data/
+
+# your own photos for local testing
+/sample-photos/

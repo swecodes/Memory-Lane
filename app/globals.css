@@ -1,24 +1,65 @@
 @import "tailwindcss";
 
+/* Light and bright on purpose, whatever the system theme: the color comes
+   from the photos themselves and a five-color label palette (colors.ts). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --bg: #f6f4ff;
+  --surface: #ffffff;
+  --ink: #1e1b3a;
+  --muted: #5f5c7e;
+  --line: #e6e2f5;
+  --grape: #6d28d9;
+  --grape-tint: #efe7ff;
+  --coral: #be123c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-grape: var(--grape);
+  --color-grape-tint: var(--grape-tint);
+  --color-coral: var(--coral);
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* In a layer, so Tailwind utilities (also layered) can still override these.
+   Unlayered CSS would beat every utility regardless of specificity. */
+@layer base {
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--grape);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+/* The hand-drawn circle around photos the chat cites. It draws itself once
+   per answer. */
+.pencil-mark path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: pencil-draw 0.7s ease-out forwards;
+}
+@keyframes pencil-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pencil-mark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(30 27 58 / 0.6);
 }
